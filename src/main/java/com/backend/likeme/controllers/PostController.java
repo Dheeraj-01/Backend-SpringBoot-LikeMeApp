@@ -134,7 +134,7 @@ public class PostController {
 
         InputStream resource = this.fileService.getResource(path, imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(resource,response.getOutputStream())   ;
+        StreamUtils.copy(resource,response.getOutputStream());
 
     }
 
