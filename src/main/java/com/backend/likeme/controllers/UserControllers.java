@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/v1/users")
 public class UserControllers {
     @Autowired
     private UserService userService;
