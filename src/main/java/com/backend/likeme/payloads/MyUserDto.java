@@ -1,6 +1,5 @@
 package com.backend.likeme.payloads;
 
-import com.backend.likeme.entities.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -18,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class MyUserDto {
     private int id;
 
     @NotEmpty
@@ -41,6 +40,10 @@ public class UserDto {
     private String imageLink;
 
     private Set<RoleDto> roles = new HashSet<>();
+
+    private Set<MyPostDto> savedPosts = new HashSet<>();
+    private Set<FriendDto> friends = new HashSet<>();
+    private Set<FriendDto> friendOf = new HashSet<>();
 
     @JsonIgnore
     public String getPassword() {

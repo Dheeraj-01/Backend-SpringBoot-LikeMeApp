@@ -4,6 +4,7 @@ import com.backend.likeme.config.AppConstants;
 import com.backend.likeme.entities.Role;
 import com.backend.likeme.entities.User;
 import com.backend.likeme.exceptions.ResourceNotFoundException;
+import com.backend.likeme.payloads.MyUserDto;
 import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.repositories.RoleRepo;
 import com.backend.likeme.repositories.UserRepo;
@@ -71,10 +72,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(Integer userId) {
+    public MyUserDto getUserById(Integer userId) {
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
-        return this.userToDto(user);
+        return this.modelMapper.map(user, MyUserDto.class);
     }
 
     @Override
@@ -90,6 +91,16 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         this.userRepo.delete(user);
+    }
+
+    @Override
+    public void saveFriendByUser(Integer userId, Integer friendId) {
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User id", userId));
+        User friend = this.userRepo.findById(friendId)
+                .orElseThrow(() -> new ResourceNotFoundException("Friend", "friendId id", friendId));
+        user.getFriends().add(friend);
+        userRepo.save(user);
     }
 
     public User dtoToUser(UserDto userDto){

@@ -87,11 +87,9 @@ public class PostController {
 	}
 
 	@GetMapping("/posts/{postId}/user/{userId}/save")
-	public ResponseEntity<UserDto> savePostByUserId(@PathVariable Integer postId, @PathVariable Integer userId) {
-
-		UserDto userDto = this.postService.savePostByUser(postId, userId);
-		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
-
+	public ApiResponse savePostByUserId(@PathVariable Integer postId, @PathVariable Integer userId) {
+		this.postService.savePostByUser(postId, userId);
+		return new ApiResponse("Post is successfully Saved with the Given User !!", true);
 	}
 
 	// delete post

@@ -154,14 +154,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public UserDto savePostByUser(Integer postId, Integer userId) {
+    public void savePostByUser(Integer postId, Integer userId) {
         Post post = this.postRepo.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "User id", userId));
         user.getSavedPosts().add(post);
         this.userRepo.save(user);
-        return this.modelMapper.map(user, UserDto.class);
     }
 
 

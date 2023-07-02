@@ -1,6 +1,7 @@
 package com.backend.likeme.controllers;
 
 import com.backend.likeme.payloads.ApiResponse;
+import com.backend.likeme.payloads.MyUserDto;
 import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,13 @@ public class UserControllers {
 
     // GET - user get
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getSingleUser(@PathVariable Integer userId) {
+    public ResponseEntity<MyUserDto> getSingleUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.userService.getUserById(userId));
+    }
+
+    @GetMapping("/{userId}/friend/{friendId}/save")
+    public ApiResponse saveFriendByUser(@PathVariable Integer userId, @PathVariable Integer friendId) {
+        this.userService.saveFriendByUser(userId, friendId);
+        return new ApiResponse("Friend is Successfully Added !!", true);
     }
 }

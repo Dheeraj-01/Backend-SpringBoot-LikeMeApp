@@ -32,6 +32,8 @@ public class User implements UserDetails {
 
     private String about;
 
+    private String imageLink;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts = new ArrayList<>();
 
@@ -55,14 +57,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="tbl_friends",
             joinColumns=@JoinColumn(name="personId"),
             inverseJoinColumns=@JoinColumn(name="friendId")
     )
     private Set<User> friends = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="tbl_friends",
             joinColumns=@JoinColumn(name="friendId"),
             inverseJoinColumns=@JoinColumn(name="personId")

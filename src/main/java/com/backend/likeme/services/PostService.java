@@ -38,6 +38,6 @@ public interface PostService {
 	//search posts
 	List<PostDto> searchPosts(String keyword);
 
-	UserDto savePostByUser(Integer postId, Integer userId);
+	void savePostByUser(Integer postId, Integer userId);
 
 }
