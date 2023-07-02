@@ -1,12 +1,16 @@
 package com.backend.likeme.services.impl;
 
+import com.backend.likeme.config.AppConstants;
+import com.backend.likeme.entities.Role;
 import com.backend.likeme.entities.User;
 import com.backend.likeme.exceptions.ResourceNotFoundException;
 import com.backend.likeme.payloads.UserDto;
+import com.backend.likeme.repositories.RoleRepo;
 import com.backend.likeme.repositories.UserRepo;
 import com.backend.likeme.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +21,31 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepo roleRepo;
     @Override
     public UserDto registerNewUser(UserDto userDto) {
-        return null;
+
+        User user = this.modelMapper.map(userDto, User.class);
+
+        // encoded the password
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+        // roles
+        Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+        user.getRoles().add(role);
+
+        User newUser = this.userRepo.save(user);
+
+        return this.modelMapper.map(newUser, UserDto.class);
     }
 
     @Override
@@ -50,7 +74,6 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(Integer userId) {
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
-
         return this.userToDto(user);
     }
 

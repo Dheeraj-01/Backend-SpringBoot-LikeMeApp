@@ -5,6 +5,7 @@ import com.backend.likeme.config.AppConstants;
 import com.backend.likeme.payloads.ApiResponse;
 import com.backend.likeme.payloads.PostDto;
 import com.backend.likeme.payloads.PostResponse;
+import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.services.FileService;
 import com.backend.likeme.services.PostService;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -82,6 +83,14 @@ public class PostController {
 
 		PostDto postDto = this.postService.getPostById(postId);
 		return new ResponseEntity<PostDto>(postDto, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/posts/{postId}/user/{userId}/save")
+	public ResponseEntity<UserDto> savePostByUserId(@PathVariable Integer postId, @PathVariable Integer userId) {
+
+		UserDto userDto = this.postService.savePostByUser(postId, userId);
+		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 
 	}
 

@@ -36,9 +36,16 @@ public class Post {
 
 	@ManyToOne
 	private User user;
+
+	@ManyToMany(mappedBy = "savedPosts")
+	private Set<User> postsSavedByUsers = new HashSet<>();
 	
 	
 	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
 	private Set<Comment> comments=new HashSet<>();
+
+	@OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+	private Set<Like> likes=new HashSet<>();
+
 
 }

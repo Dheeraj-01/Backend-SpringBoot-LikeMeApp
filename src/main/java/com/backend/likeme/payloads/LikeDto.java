@@ -5,12 +5,12 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class CommentDto {
-	
-	private int id;
+public class LikeDto {
 
-	private String content;
+    private int id;
 
-	private UserDto user;
+    private String type;
+
+    private UserDto user;
 
 }

@@ -6,6 +6,7 @@ import com.backend.likeme.entities.User;
 import com.backend.likeme.exceptions.ResourceNotFoundException;
 import com.backend.likeme.payloads.PostDto;
 import com.backend.likeme.payloads.PostResponse;
+import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.repositories.CategoryRepo;
 import com.backend.likeme.repositories.PostRepo;
 import com.backend.likeme.repositories.UserRepo;
@@ -151,5 +152,17 @@ public class PostServiceImpl implements PostService {
         List<PostDto> postDtos = posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
         return postDtos;
     }
+
+    @Override
+    public UserDto savePostByUser(Integer postId, Integer userId) {
+        Post post = this.postRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "User id", userId));
+        user.getSavedPosts().add(post);
+        this.userRepo.save(user);
+        return this.modelMapper.map(user, UserDto.class);
+    }
+
 
 }
