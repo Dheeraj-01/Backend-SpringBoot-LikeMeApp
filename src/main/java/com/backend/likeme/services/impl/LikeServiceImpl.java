@@ -55,4 +55,21 @@ public class LikeServiceImpl implements LikeService {
 		this.likeRepo.delete(like);
 	}
 
+	@Override
+	public LikeDto createLike(LikeDto likeDto, Integer postId, String userEmail) {
+		Post post = this.postRepo.findById(postId)
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "post id ", postId));
+
+		User user = this.userRepo.findByEmail(userEmail).get();
+
+		Like like = this.modelMapper.map(likeDto, Like.class);
+
+		like.setPost(post);
+		like.setUser(user);
+
+		Like saveLike = this.likeRepo.save(like);
+
+		return this.modelMapper.map(saveLike, LikeDto.class);
+	}
+
 }

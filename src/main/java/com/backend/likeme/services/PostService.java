@@ -2,7 +2,6 @@ package com.backend.likeme.services;
 
 import com.backend.likeme.payloads.PostDto;
 import com.backend.likeme.payloads.PostResponse;
-import com.backend.likeme.payloads.UserDto;
 
 import java.util.List;
 
@@ -38,6 +37,6 @@ public interface PostService {
 	//search posts
 	List<PostDto> searchPosts(String keyword);
 
-	void savePostByUser(Integer postId, Integer userId);
+	void savePostByUser(Integer postId, String userEmail);
 
 }

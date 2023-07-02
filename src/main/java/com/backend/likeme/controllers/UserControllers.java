@@ -1,7 +1,6 @@
 package com.backend.likeme.controllers;
 
 import com.backend.likeme.payloads.ApiResponse;
-import com.backend.likeme.payloads.MyUserDto;
 import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +13,20 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public class UserControllers {
     @Autowired
     private UserService userService;
 
     // POST-create user
-    @PostMapping("/")
+    @PostMapping("/user/create")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDto createUserDto = this.userService.createUser(userDto);
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
 
     // PUT- update user
-
-    @PutMapping("/{userId}")
+    @PutMapping("/user/{userId}")
     public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") Integer uid) {
         UserDto updatedUser = this.userService.updateUser(userDto, uid);
         return ResponseEntity.ok(updatedUser);
@@ -37,27 +35,21 @@ public class UserControllers {
     //ADMIN
     // DELETE -delete user
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/user/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer uid) {
         this.userService.deleteUser(uid);
         return new ResponseEntity<ApiResponse>(new ApiResponse("User deleted Successfully", true), HttpStatus.OK);
     }
 
     // GET - user get
-    @GetMapping("/")
+    @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(this.userService.getAllUsers());
     }
 
     // GET - user get
-    @GetMapping("/{userId}")
-    public ResponseEntity<MyUserDto> getSingleUser(@PathVariable Integer userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<UserDto> getSingleUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(this.userService.getUserById(userId));
-    }
-
-    @GetMapping("/{userId}/friend/{friendId}/save")
-    public ApiResponse saveFriendByUser(@PathVariable Integer userId, @PathVariable Integer friendId) {
-        this.userService.saveFriendByUser(userId, friendId);
-        return new ApiResponse("Friend is Successfully Added !!", true);
     }
 }

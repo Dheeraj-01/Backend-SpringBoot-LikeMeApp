@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MyUserDto {
+public class ProfileDto {
     private int id;
 
     @NotEmpty
@@ -32,26 +32,14 @@ public class MyUserDto {
     @Size(min = 3, max = 10, message = "Password must be min of 3 chars and max of 10 chars !!")
 
     @NotEmpty
-    private String password;
-
-    @NotEmpty
     private String about;
 
     private String imageLink;
 
     private Set<RoleDto> roles = new HashSet<>();
 
-    private Set<MyPostDto> savedPosts = new HashSet<>();
+    private Set<ProfilePostDto> savedPosts = new HashSet<>();
     private Set<FriendDto> friends = new HashSet<>();
     private Set<FriendDto> friendOf = new HashSet<>();
 
-    @JsonIgnore
-    public String getPassword() {
-        return this.password;
-    }
-
-    @JsonProperty
-    public void setPassword(String password) {
-        this.password=password;
-    }
 }

@@ -8,4 +8,5 @@ public interface LikeService {
 
 	void deleteLike(Integer likeId);
 
+	LikeDto createLike(LikeDto likeDto, Integer postId, String userEmail);
 }

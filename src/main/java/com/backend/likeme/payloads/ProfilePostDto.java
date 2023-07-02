@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MyPostDto {
+public class ProfilePostDto {
 
     private Integer postId;
 

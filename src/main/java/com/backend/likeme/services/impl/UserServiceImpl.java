@@ -4,7 +4,6 @@ import com.backend.likeme.config.AppConstants;
 import com.backend.likeme.entities.Role;
 import com.backend.likeme.entities.User;
 import com.backend.likeme.exceptions.ResourceNotFoundException;
-import com.backend.likeme.payloads.MyUserDto;
 import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.repositories.RoleRepo;
 import com.backend.likeme.repositories.UserRepo;
@@ -72,10 +71,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MyUserDto getUserById(Integer userId) {
+    public UserDto getUserById(Integer userId) {
         User user = this.userRepo.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " Id ", userId));
-        return this.modelMapper.map(user, MyUserDto.class);
+        return this.modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -101,6 +100,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Friend", "friendId id", friendId));
         user.getFriends().add(friend);
         userRepo.save(user);
+    }
+
+    @Override
+    public UserDto findUserByEmail(String userEmail) {
+        User user = this.userRepo.findByEmail(userEmail).get();
+        return this.modelMapper.map(user, UserDto.class);
     }
 
     public User dtoToUser(UserDto userDto){

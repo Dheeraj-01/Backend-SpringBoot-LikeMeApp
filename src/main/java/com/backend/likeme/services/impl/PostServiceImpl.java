@@ -6,7 +6,6 @@ import com.backend.likeme.entities.User;
 import com.backend.likeme.exceptions.ResourceNotFoundException;
 import com.backend.likeme.payloads.PostDto;
 import com.backend.likeme.payloads.PostResponse;
-import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.repositories.CategoryRepo;
 import com.backend.likeme.repositories.PostRepo;
 import com.backend.likeme.repositories.UserRepo;
@@ -154,11 +153,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void savePostByUser(Integer postId, Integer userId) {
+    public void savePostByUser(Integer postId, String userEmail) {
         Post post = this.postRepo.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "post id", postId));
-        User user = this.userRepo.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "User id", userId));
+        User user = this.userRepo.findByEmail(userEmail).get();
         user.getSavedPosts().add(post);
         this.userRepo.save(user);
     }

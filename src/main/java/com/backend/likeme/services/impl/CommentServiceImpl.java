@@ -55,4 +55,21 @@ public class CommentServiceImpl implements CommentService {
 		this.commentRepo.delete(com);
 	}
 
+	@Override
+	public CommentDto createComment(CommentDto commentDto, Integer postId, String userEmail) {
+		Post post = this.postRepo.findById(postId)
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "post id ", postId));
+
+		User user = this.userRepo.findByEmail(userEmail).get();
+
+		Comment comment = this.modelMapper.map(commentDto, Comment.class);
+
+		comment.setPost(post);
+		comment.setUser(user);
+
+		Comment savedComment = this.commentRepo.save(comment);
+
+		return this.modelMapper.map(savedComment, CommentDto.class);
+	}
+
 }

@@ -5,7 +5,6 @@ import com.backend.likeme.config.AppConstants;
 import com.backend.likeme.payloads.ApiResponse;
 import com.backend.likeme.payloads.PostDto;
 import com.backend.likeme.payloads.PostResponse;
-import com.backend.likeme.payloads.UserDto;
 import com.backend.likeme.services.FileService;
 import com.backend.likeme.services.PostService;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -20,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -86,9 +86,9 @@ public class PostController {
 
 	}
 
-	@GetMapping("/posts/{postId}/user/{userId}/save")
-	public ApiResponse savePostByUserId(@PathVariable Integer postId, @PathVariable Integer userId) {
-		this.postService.savePostByUser(postId, userId);
+	@GetMapping("/posts/{postId}/save")
+	public ApiResponse savePostByUserId(Principal principal, @PathVariable Integer postId) {
+		this.postService.savePostByUser(postId, principal.getName());
 		return new ApiResponse("Post is successfully Saved with the Given User !!", true);
 	}
 

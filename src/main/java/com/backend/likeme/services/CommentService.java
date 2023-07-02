@@ -8,4 +8,5 @@ public interface CommentService {
 
 	void deleteComment(Integer commentId);
 
+	CommentDto createComment(CommentDto commentDto, Integer postId, String userEmail);
 }

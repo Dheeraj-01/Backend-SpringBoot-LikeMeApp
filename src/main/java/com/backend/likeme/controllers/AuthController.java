@@ -5,7 +5,6 @@ import com.backend.likeme.exceptions.ApiException;
 import com.backend.likeme.payloads.JwtAuthRequest;
 import com.backend.likeme.payloads.JwtAuthResponse;
 import com.backend.likeme.payloads.UserDto;
-import com.backend.likeme.repositories.UserRepo;
 import com.backend.likeme.security.JwtTokenHelper;
 import com.backend.likeme.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -38,6 +37,9 @@ public class AuthController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ModelMapper mapper;
+
 	@PostMapping("/login")
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
 		this.authenticate(request.getUsername(), request.getPassword());
@@ -50,13 +52,25 @@ public class AuthController {
 		return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
 	}
 
+	// register new user api
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
+		UserDto registeredUser = this.userService.registerNewUser(userDto);
+		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+	}
+
+
+	@GetMapping("/current-user")
+	public ResponseEntity<UserDto> getUser(Principal principal) {
+		UserDto user = this.userService.findUserByEmail(principal.getName());
+		return new ResponseEntity<UserDto>(user, HttpStatus.OK);
+	}
+
 	private void authenticate(String username, String password) throws Exception {
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
 				password);
-
 		try {
-
 			this.authenticationManager.authenticate(authenticationToken);
 
 		} catch (BadCredentialsException e) {
@@ -64,26 +78,6 @@ public class AuthController {
 			throw new ApiException("Invalid username or password !!");
 		}
 
-	}
-
-	// register new user api
-
-	@PostMapping("/register")
-	public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
-		UserDto registeredUser = this.userService.registerNewUser(userDto);
-		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
-	}
-
-	// get loggedin user data
-	@Autowired
-	private UserRepo userRepo;
-	@Autowired
-	private ModelMapper mapper;
-
-	@GetMapping("/current-user/")
-	public ResponseEntity<UserDto> getUser(Principal principal) {
-		User user = this.userRepo.findByEmail(principal.getName()).get();
-		return new ResponseEntity<UserDto>(this.mapper.map(user, UserDto.class), HttpStatus.OK);
 	}
 
 }

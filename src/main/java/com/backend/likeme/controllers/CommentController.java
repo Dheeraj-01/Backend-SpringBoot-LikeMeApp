@@ -8,12 +8,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/v1/")
 public class CommentController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@GetMapping("/post/{postId}/user/{userId}/comments")
+	public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment,
+													@PathVariable Integer postId,
+													Principal principal) {
+
+		CommentDto createComment = this.commentService.createComment(comment, postId, principal.getName());
+		return new ResponseEntity<CommentDto>(createComment, HttpStatus.CREATED);
+	}
 
 	@PostMapping("/post/{postId}/user/{userId}/comments")
 	public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment,
