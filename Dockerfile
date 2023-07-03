@@ -10,6 +10,6 @@ FROM openjdk:11-jdk-slim
 
 EXPOSE 5000
 
-COPY src/main/resources/*.jar app.jar
+COPY ./*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
