@@ -1,7 +1,5 @@
 package com.backend.likeme.payloads;
 
-import com.backend.likeme.entities.Like;
-import com.backend.likeme.entities.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +27,7 @@ public class PostDto {
 
 	private UserDto user;
 	private Set<CommentDto> comments=new HashSet<>();
-	private Set<Like> likes=new HashSet<>();
+	private Set<LikeDto> likes=new HashSet<>();
 	
 	
 	
