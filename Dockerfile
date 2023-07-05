@@ -1,15 +1,15 @@
-FROM ubuntu:latest AS build
-
-RUN apt-get update
-RUN apt-get install openjdk-11-jdk -y
+#
+# Build stage
+#
+FROM maven:3.8.2-jdk-11 AS build
 COPY . .
+RUN mvn clean package -DskipTests
 
-RUN ./gradlew bootJar --no-daemon
-
+#
+# Package stage
+#
 FROM openjdk:11-jdk-slim
-
-EXPOSE 5000
-
-COPY ./*.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY --from=build /target/Likeme-0.0.1-SNAPSHOT.jar demo.jar
+# ENV PORT=8080
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","demo.jar"]
