@@ -17,21 +17,12 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 
-	@GetMapping("/post/{postId}/user/{userId}/comments")
+	@PostMapping("/post/{postId}/comments")
 	public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment,
 													@PathVariable Integer postId,
 													Principal principal) {
 
 		CommentDto createComment = this.commentService.createComment(comment, postId, principal.getName());
-		return new ResponseEntity<CommentDto>(createComment, HttpStatus.CREATED);
-	}
-
-	@PostMapping("/post/{postId}/user/{userId}/comments")
-	public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment,
-													@PathVariable Integer postId,
-													@PathVariable Integer userId) {
-
-		CommentDto createComment = this.commentService.createComment(comment, postId, userId);
 		return new ResponseEntity<CommentDto>(createComment, HttpStatus.CREATED);
 	}
 
