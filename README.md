@@ -30,6 +30,8 @@ Application should have authentication.
 - Apply role-based security restrictions using basic authorization (encrypted credentials stored in DB): two roles - ADMIN and USER, and USER has only read permissions
 - Notifications for new friend requests, likes, and comments - TODO
 
+## ER Diagram
+<img width="861" alt="Screenshot 2023-07-10 at 1 40 54 AM" src="https://github.com/Dheeraj-01/Backend-SpringBoot-LikeMeApp/assets/54698983/c81bc884-553a-4301-8c6f-49713fbf2963">
 
 ## Swagger UI
 <img width="1339" alt="Screenshot 2023-07-05 at 11 14 43 PM" src="https://github.com/Dheeraj-01/Backend-SpringBoot-LikeMeApp/assets/54698983/7907ac4a-19ac-47b0-b44a-45bdf3a29e11">
