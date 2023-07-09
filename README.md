@@ -1,4 +1,11 @@
 # Backend-SpringBoot-LikeMeApp
+[<kbd> <br> HLD <br> </kbd>][KBD]
+[<kbd> <br> ER Diagram <br> </kbd>][KGD]
+
+
+[KBD]: https://lucid.app/lucidchart/697d2f23-9f25-4dec-9258-5df6e441c187/edit?viewport_loc=-10899%2C-5456%2C4308%2C2394%2C0_0&invitationId=inv_394ebe9f-efdd-4958-80f8-6b17cc0af6bf
+
+[KGD]: https://github.com/Dheeraj-01/Backend-SpringBoot-LikeMeApp/assets/54698983/c81bc884-553a-4301-8c6f-49713fbf2963
 
 _Build tool_: Maven
 
