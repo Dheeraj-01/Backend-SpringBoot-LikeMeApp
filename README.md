@@ -1,9 +1,5 @@
 # Backend-SpringBoot-LikeMeApp
 
-[![Java CI](https://github.com/andrei-punko/articles-backend-app/actions/workflows/maven.yml/badge.svg)](https://github.com/andrei-punko/articles-backend-app/actions/workflows/maven.yml)
-
-This should be purely a REST endpoints backend application with Swagger UI.
-
 _Build tool_: Maven
 
 _DB_: MYSQL
